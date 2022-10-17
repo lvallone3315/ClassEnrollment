@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClassEnrollment", "ClassEnrollment\ClassEnrollment.vcxproj", "{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{165B08FA-2D39-403E-ADDC-20220A5096E3}"
+	ProjectSection(SolutionItems) = preProject
+		ClassEnrollment\PlayerUI.cpp = ClassEnrollment\PlayerUI.cpp
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Debug|x64.ActiveCfg = Debug|x64
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Debug|x64.Build.0 = Debug|x64
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Debug|x86.ActiveCfg = Debug|Win32
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Debug|x86.Build.0 = Debug|Win32
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Release|x64.ActiveCfg = Release|x64
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Release|x64.Build.0 = Release|x64
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Release|x86.ActiveCfg = Release|Win32
+		{39EF83B9-22D3-4453-80DA-A00CCBEF40CF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED6BD9DD-A1EA-4AF3-8B67-F34E5FBA909B}
+	EndGlobalSection
+EndGlobal
