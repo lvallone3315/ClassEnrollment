@@ -4,9 +4,22 @@
 #include "ClassUI.h"
 #include "Student.h"
 #include <iostream>
-#include <stdexcept>
+#include <stdexcept>  // required for stoi - throws exception for invalid input (e.g. string starting with alphas
 #include <string>
-#include <vector>
+#include <vector>    // Vector support for tracking student objects
+#include <list>      // list support for tracking student objects
+#include <iterator>  // list related - needed to traverse list of student objects
+
+// Global storage for student arrays so can use helper function to display
+    // two versions
+    //   1st vector of objects
+    //   2nd vector of pointers to objects
+std::vector<Student> studentVector;
+std::vector<Student*> studentPointerVector;
+
+// list approach
+//
+std::list<Student> studentList; 
 
 int main()
 {
@@ -15,8 +28,11 @@ int main()
 
     string studentIdInput;
     unsigned int studentId;
-    std::vector<Student> allStudents;
-    std::vector<Student*> sPtr;
+
+    // helper functions
+    void displayStudents(ClassUI, string);
+
+
 
     for (int i = 0; i < 5; i++) {
          studentIdInput = console.getUserInput("Enter student ID: ");
@@ -33,22 +49,60 @@ int main()
 
          // push the object onto the vector array
          Student student (studentId);
-         allStudents.push_back(student);
+         studentVector.push_back(student);
+
+         // add the object to a list
+         studentList.push_back(student);
 
          // allocate memory from the heap
          Student *studentP = new Student(studentId);
-         sPtr.push_back(studentP);
+         studentPointerVector.push_back(studentP);
     }
+    displayStudents(console, "Vector & List: after configuring entered student IDs");
 
-    //for (Student studentIndex : allStudents) {
-    for (int i = 0; i < allStudents.size(); i++) {
-        console.writeOutput(to_string(allStudents[i].getStudentId()) + "\n");
+    // pushing an element at the beginning of the list
+    Student student(99);
+    studentList.push_front(student);
+    studentVector.insert(studentVector.begin(), student);
+    displayStudents(console, "Vector & List: adding student ID 99 to front");
+
+    // erasing element at beginning, end & given position
+    // vector
+    studentVector.erase(studentVector.begin());
+    studentVector.pop_back();
+    studentVector.erase(studentVector.begin() + 2);  // erases element in 3rd position
+    displayStudents(console, "Vector: after deleting front, back & 3rd element");
+
+    // list
+    studentList.pop_front();
+    studentList.pop_back();
+    for (list <Student> :: iterator itr = studentList.begin(); itr != studentList.end(); itr++) {
+        if (itr->getStudentId() == 3) {
+            studentList.erase(itr);
+            break;
+        }
     }
-    for (Student j : allStudents) {
-        cout << j.getStudentId();
+    displayStudents(console, "List: After deleting front, back & student ID 3");
+
+}
+
+void displayStudents(ClassUI console,string heading) {
+    cout << "\n*** " << heading << " ***\n";
+    cout << "Display all students in studentVector (iterating by index)\n";
+    for (int i = 0; i < studentVector.size(); i++) {
+        console.writeOutput(to_string(studentVector[i].getStudentId()) + " ");
+    }
+    cout << "\nDisplay all students in studentVector\n";
+    for (Student j : studentVector) {
+        cout << j.getStudentId() << " ";
+    }
+    cout << "\nDisplay all students in vector of pointers to student objects\n";
+    for (Student* p : studentPointerVector) {
+        cout << p->getStudentId() << " ";
+    }
+    cout << "\nDisplay all students in list of student objects\n";
+    for (list <Student> ::iterator itr = studentList.begin(); itr != studentList.end(); itr++) {
+        cout << itr->getStudentId() << " ";
     }
     cout << "\n";
-    for (Student* p : sPtr) {
-        cout << p->getStudentId();
-    }
 }
