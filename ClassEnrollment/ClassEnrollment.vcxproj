@@ -129,9 +129,11 @@
   <ItemGroup>
     <ClCompile Include="ClassEnrollment.cpp" />
     <ClCompile Include="ClassUI.cpp" />
+    <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassUI.h" />
+    <ClInclude Include="Student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
