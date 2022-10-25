@@ -34,8 +34,7 @@ string ClassUI::getUserInput(string prompt) {
     string userInput;
 
     writeOutput(prompt);
-    cin >> userInput;
-    writeOutput(userInput+"\n");
+    getline(cin, userInput);
     return userInput;
 }
 

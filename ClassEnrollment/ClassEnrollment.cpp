@@ -2,6 +2,7 @@
 //
 
 #include "ClassUI.h"
+#include "Parser.h"
 #include "Student.h"
 #include <iostream>
 #include <stdexcept>  // required for stoi - throws exception for invalid input (e.g. string starting with alphas
@@ -24,7 +25,22 @@ std::list<Student> studentList;
 int main()
 {
     ClassUI console;
+    Parser parser;
+    string userInputString;
+    Parser::InputStruct *parserOutput;
+
     console.writeOutput("Hello World\n");
+
+    // Test loop to verify parser works as expected
+
+    for (int i = 0; i < 5; i++) {
+        userInputString = console.getUserInput("Enter command: ");
+        parserOutput = parser.parseInput(userInputString);
+        parser.displayParsedOutput(parserOutput, console);
+    }
+
+
+    // Play with Vector & List arrays to store students
 
     string studentIdInput;
     unsigned int studentId;
