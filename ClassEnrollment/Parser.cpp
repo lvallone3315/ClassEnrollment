@@ -42,27 +42,23 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 
 	/* Approach:
 	 *   Define a few regular expression comparisons to:
-	 *     1) validate the format is one of the defined formats
-	 *     2) if valid, parse into the appropriate fields
-	 *   Alternatively:
-	 *   Parse in sections
-	 *     First define a regex expression to find the first # (ie the command)
-	 *     Then parse based on the command
+	 *     1) validate the format is one of the defined formats (regex)
+	 *     2) if valid, parse into the appropriate fields (scanf_s)
 	 * 
 	 * ToDo - cleanup by using helper funtions to parse
+	 * ToDo - update parser to save the string the user entered
 	 */
 
-	//             Regular expressions for comamnds
-	// command only (e.g. 5 = quit), single digit in range 1-5
+	       //             Regular expressions for comamnds
+	    // command only (e.g. 5 = quit), single digit in range 1-5
 	std::regex cmdRegex("^\\s?[1-5]\\s?$");
-	// command + one integer (either student id or class id), 1 or more digits
+	    // command + one integer (either student id or class id), 1 or more digits
 	std::regex oneArgRegex("^\\s?[1-5]\\s[0-9]+\\s?$");
-	// command + two integers (e.g. enroll student to class), each 1 or more digits
+	    // command + two integers (e.g. enroll student to class), each 1 or more digits
 	std::regex twoArgRegex("^\\s?[1-5]\\s[0-9]+\\s[0-9]+\\s?$"); 
 
 	//   command with no arguments - only quit command has this format
 	if (regex_match(userString, cmdRegex)) {
-		// cout << "Command match\n";
 		int command;   // define temporary variables locally to avoid scope issues & improve readability
 		sscanf_s(userString.c_str(), "%d", &command);
 		if (command == QUIT)    // note: enum values are defined in parser.h - no need to hard code here
@@ -73,7 +69,6 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 
 	// comamnd with one argument - could be class ID or Student ID
 	else if (regex_match(userString, oneArgRegex)) {
-		// cout << "One argument with command match\n";
 		int command;
 		int id;  // could be either class ID or student ID
 		sscanf_s(userString.c_str(), "%d %d", &command, &id);
@@ -91,7 +86,6 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 
 	// command with two arguments - only enrollment command allows this
 	else if (regex_match(userString, twoArgRegex)) {
-		// cout << "Two arguments with command match\n";
 		int command;
 		int classId;
 		int studentId;
@@ -109,6 +103,14 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 	}
 	return (parsedInput);
 }
+
+/**
+ * displayParserOutput() - knows how to print all elements of parser output structure
+ * args:
+ *   parsedOutput - pointer to structure returned by parser
+ *   console - UI to print  --- note major problems with this approach, need to debug further
+ *      resorting to cout for now
+*/
 
 void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 	//

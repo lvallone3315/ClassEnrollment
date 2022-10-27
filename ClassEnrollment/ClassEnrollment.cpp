@@ -1,9 +1,27 @@
 // ClassEnrollment.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// 
+// Application to capture students & classes (entered from console)
+// & then associate (e.g. enroll entered students in specified classes) & display class rosters
+// 
+// Real objectives are to demonstrate some C++ constructs including:
+// * Object oriented design including encapsulation
+// * Enums
+// * Vector & Lists including heap memory allocation
+// * Parsing using regex & sscanf
+// 
+// Various issues with this code:
+//   Versioning
+//   Hardcoding of a loop iteration
+//   Hardcoding user output
+//   UI class seems to have issues consistently outputing the passed strings
+//   Inconsistent formats (e.g. comments)
+//   Student storage & display really should be its own class to hide implementation from others
 //
 
 #include "ClassUI.h"
 #include "Parser.h"
 #include "Student.h"
+
 #include <iostream>
 #include <stdexcept>  // required for stoi - throws exception for invalid input (e.g. string starting with alphas
 #include <string>
@@ -24,57 +42,50 @@ std::list<Student> studentList;
 
 int main()
 {
-    ClassUI console;
-    Parser parser;
-    string userInputString;
-    Parser::InputStruct *parserOutput;
+    ClassUI console;    // UI encapsulation - rather than directly writing to console
+    Parser parser;      // command parser - pass it a string - parser knows command format & returns struct
+    Parser::InputStruct* parserOutput;
 
-    console.writeOutput("Hello World\n");
+    string userInputString;   // raw user input - retrived from UI & redirected to parser for processing
 
-    // Test loop to verify parser works as expected
-
-    for (int i = 0; i < 5; i++) {
-        userInputString = console.getUserInput("Enter command: ");
-        parserOutput = parser.parseInput(userInputString);
-        parser.displayParsedOutput(parserOutput, console);
-    }
-
-
-    // Play with Vector & List arrays to store students
-
-    string studentIdInput;
-    unsigned int studentId;
 
     // helper functions
     void displayStudents(ClassUI, string);
+    int getStudentId(ClassUI console);
+    void storeStudentId(unsigned int studentId);
 
+    // ToDo - add versioning
+    console.writeOutput("Hello Class Enrollment application!\n");
 
-
+    // original approach to data entry - before parser implemented
+    // prompt user 5 times for a student ID, push onto the end of the storage array(s)
+    unsigned int studentId;
     for (int i = 0; i < 5; i++) {
-         studentIdInput = console.getUserInput("Enter student ID: ");
-
-         // try to make it robust, if a non-valid id is entered, e.g. abc#, catch the error & request again
-         // stoi() is good & quick, but will quietly discard non-numeric chars or throw an error in some cases
-         try {
-             studentId = stoi(studentIdInput);
-         }
-         catch (const std::invalid_argument& ia) {
-             console.writeOutput("Invalid student id: " + string(ia.what()) + '\n');
-             continue;
-         }
-
-         // push the object onto the vector array
-         Student student (studentId);
-         studentVector.push_back(student);
-
-         // add the object to a list
-         studentList.push_back(student);
-
-         // allocate memory from the heap
-         Student *studentP = new Student(studentId);
-         studentPointerVector.push_back(studentP);
+        if ((studentId = getStudentId(console)) != 0) {
+            storeStudentId(studentId);
+        }
+        // else invalid entry - continue to get next student
     }
-    displayStudents(console, "Vector & List: after configuring entered student IDs");
+
+    // Parser approach to data entry
+    //    prompt user for a command and while that command isn't quit, grab student IDs
+
+    do {
+        userInputString = console.getUserInput("Enter command: ");
+        parserOutput = parser.parseInput(userInputString);
+        parser.displayParsedOutput(parserOutput, console);
+
+        switch (parserOutput->command) {
+        case Parser::STUDENT_ID:
+            storeStudentId(parserOutput->studentId);
+        };
+    } while (parserOutput->command != Parser::QUIT);
+
+    // display contents of all three versions
+    displayStudents(console, "Vector & List: after entering student IDs");
+
+
+         //   Playing with some of the vector & list capabilities
 
     // pushing an element at the beginning of the list
     Student student(99);
@@ -102,6 +113,31 @@ int main()
 
 }
 
+    //     Store the student Id at the end of the arrays (ie vectors & list)
+    //       three different storage approaches
+    //          vector array storing classes, vector array storing pointers to classes
+    //          list storing class
+void storeStudentId(unsigned int studentId) {
+
+    // push the object onto the vector array
+    Student student(studentId);
+    studentVector.push_back(student);
+
+    // allocate memory from the heap
+    Student* studentP = new Student(studentId);
+    studentPointerVector.push_back(studentP);
+
+    // add the object to a list
+    studentList.push_back(student);
+}
+
+/*
+ *   Display student arrays (vector & list)
+ *   Multiple approaches to iterating through the vectors & lists
+ *   e.g. iterating vector by index, or iterating by 'in' ?
+ *        iterating list by iterator
+ */
+
 void displayStudents(ClassUI console,string heading) {
     cout << "\n*** " << heading << " ***\n";
     cout << "Display all students in studentVector (iterating by index)\n";
@@ -121,4 +157,26 @@ void displayStudents(ClassUI console,string heading) {
         cout << itr->getStudentId() << " ";
     }
     cout << "\n";
+}
+
+
+//          Original simple approach to entering student Id using stoi()
+// returns entered studentId or
+//   on failure - returns 0  (ToDo - find another way to indicate failure - e.g. throw an exception
+int getStudentId(ClassUI console) {
+    string studentIdInput;
+    unsigned int studentId;
+
+    studentIdInput = console.getUserInput("Enter student ID: ");
+
+    // try to make it robust, if a non-valid id is entered, e.g. abc#, catch the error & request again
+    // stoi() is good & quick, but will quietly discard non-numeric chars or throw an error in some cases
+    try {
+        studentId = stoi(studentIdInput);
+    }
+    catch (const std::invalid_argument& ia) {
+        console.writeOutput("Invalid student id: " + string(ia.what()) + '\n');
+        return 0;
+    }
+    return studentId;
 }
