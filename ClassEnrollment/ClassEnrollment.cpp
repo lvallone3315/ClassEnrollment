@@ -1,4 +1,6 @@
 // ClassEnrollment.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//    Author: Lee
+//    Created: 22-Oct, 2022 for Fall 2022 CSCI 3315
 // 
 // Application to capture students & classes (entered from console)
 // & then associate (e.g. enroll entered students in specified classes) & display class rosters
