@@ -132,12 +132,14 @@
     <ClCompile Include="ClassUI.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Student.cpp" />
+    <ClCompile Include="StudentDb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
     <ClInclude Include="ClassUI.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Student.h" />
+    <ClInclude Include="StudentDb.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

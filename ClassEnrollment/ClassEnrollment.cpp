@@ -23,6 +23,7 @@
 #include "ClassUI.h"
 #include "Parser.h"
 #include "Student.h"
+#include "StudentDb.h"
 
 #include <iostream>
 #include <stdexcept>  // required for stoi - throws exception for invalid input (e.g. string starting with alphas
@@ -47,6 +48,7 @@ int main()
     ClassUI console;    // UI encapsulation - rather than directly writing to console
     Parser parser;      // command parser - pass it a string - parser knows command format & returns struct
     Parser::InputStruct* parserOutput;
+    StudentDb studentDb;  // aggregation of all students
 
     string userInputString;   // raw user input - retrived from UI & redirected to parser for processing
 
@@ -68,6 +70,7 @@ int main()
         }
         // else invalid entry - continue to get next student
     }
+    displayStudents(console, "Displaying students entered using stoi() & local to main storage\n\n");
 
     // Parser approach to data entry
     //    prompt user for a command and while that command isn't quit, grab student IDs
@@ -79,41 +82,23 @@ int main()
 
         switch (parserOutput->command) {
         case Parser::STUDENT_ID:
-            storeStudentId(parserOutput->studentId);
+            studentDb.storeStudentId(parserOutput->studentId);
         };
     } while (parserOutput->command != Parser::QUIT);
 
     // display contents of all three versions
-    displayStudents(console, "Vector & List: after entering student IDs");
+    studentDb.displayStudents(console, "Vector & List: after entering student IDs");
 
 
-         //   Playing with some of the vector & list capabilities
-
-    // pushing an element at the beginning of the list
-    Student student(99);
-    studentList.push_front(student);
-    studentVector.insert(studentVector.begin(), student);
-    displayStudents(console, "Vector & List: adding student ID 99 to front");
-
-    // erasing element at beginning, end & given position
-    // vector
-    studentVector.erase(studentVector.begin());
-    studentVector.pop_back();
-    studentVector.erase(studentVector.begin() + 2);  // erases element in 3rd position
-    displayStudents(console, "Vector: after deleting front, back & 3rd element");
-
-    // list
-    studentList.pop_front();
-    studentList.pop_back();
-    for (list <Student> :: iterator itr = studentList.begin(); itr != studentList.end(); itr++) {
-        if (itr->getStudentId() == 3) {
-            studentList.erase(itr);
-            break;
-        }
-    }
-    displayStudents(console, "List: After deleting front, back & student ID 3");
+         //   Playing with some of the vector & list capabilities - use local versions
+    studentDb.sandboxStudentDb(console);
 
 }
+
+
+// The following code is part of the original approach which used a simple way to parse the input (stoi)
+//   and kept the vectors & list storage in main()
+//   Updated version moved all of this functionality to other classes & uses a real regex parser
 
     //     Store the student Id at the end of the arrays (ie vectors & list)
     //       three different storage approaches
