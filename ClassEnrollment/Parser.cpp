@@ -139,6 +139,7 @@ void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 		break;
 	case DISPLAY_CLASS_ROSTER:
 		// output details of display class roster request (e.g. classId)
+		break;
 
 	default:
 		cout << "*** Invalid Command ***\n";

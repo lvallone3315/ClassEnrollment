@@ -34,6 +34,8 @@
 #include <list>      // list support for tracking student objects
 #include <iterator>  // list related - needed to traverse list of student objects
 
+#define IGNORE_ORIGINAL_CODE
+
 // Global storage for student arrays so can use helper function to display
     // two versions
     //   1st vector of objects
@@ -64,6 +66,7 @@ int main()
     // ToDo - add versioning
     console.writeOutput("Hello Class Enrollment application!\n");
 
+#ifndef IGNORE_ORIGINAL_CODE
     console.writeOutput("\n\n Enter 5 integers (student IDs - store in different vector & list structures & then display\n");
     system("pause");
 
@@ -86,6 +89,7 @@ int main()
 
     extern void sandboxStudentDb(ClassUI);   // declare just before use
     sandboxStudentDb(console);
+#endif
 
     // Parser approach to data entry
     //    prompt user for a command and while that command isn't quit, grab student IDs
@@ -112,11 +116,11 @@ int main()
             classDb.displayClassId(parserOutput->classId, console);
             break;
         case Parser::QUIT:
-            console.writeOutput("Bye!!/n");
+            console.writeOutput("Bye!!\n");
             break;
         case Parser::ERROR:
         default:
-            console.writeOutput("ERROR returned from parser");
+            console.writeOutput("ERROR returned from parser\n");
             break;
         };
         // ToDo - free parserOutput memory output - maybe passing command to a local variable 1st so can free it here
