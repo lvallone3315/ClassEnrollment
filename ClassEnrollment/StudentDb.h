@@ -22,6 +22,5 @@ private:
 public:
     void displayStudents(ClassUI console, string heading);
     void storeStudentId(unsigned int studentId);
-    void sandboxStudentDb(ClassUI console);
 };
 

@@ -51,6 +51,8 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 
 	       //             Regular expressions for comamnds
 	    // command only (e.g. 5 = quit), single digit in range 1-5
+	    // For more information - try https://regex101.com/
+
 	std::regex cmdRegex("^\\s?[1-5]\\s?$");
 	    // command + one integer (either student id or class id), 1 or more digits
 	std::regex oneArgRegex("^\\s?[1-5]\\s[0-9]+\\s?$");

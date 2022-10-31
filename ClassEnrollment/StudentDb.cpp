@@ -50,31 +50,5 @@ void StudentDb::displayStudents(ClassUI console, string heading) {
     cout << "\n";
 }
 
-void StudentDb::sandboxStudentDb(ClassUI console) {
-    //   Playing with some of the vector & list capabilities - use local versions
 
-// pushing an element at the beginning of the list
-    Student student(99);
-    studentList.push_front(student);
-    studentVector.insert(studentVector.begin(), student);
-    displayStudents(console, "Vector & List: adding student ID 99 to front");
-
-    // erasing element at beginning, end & given position
-    // vector
-    studentVector.erase(studentVector.begin());
-    studentVector.pop_back();
-    studentVector.erase(studentVector.begin() + 2);  // erases element in 3rd position
-    displayStudents(console, "Vector: after deleting front, back & 3rd element");
-
-    // list
-    studentList.pop_front();
-    studentList.pop_back();
-    for (list <Student> ::iterator itr = studentList.begin(); itr != studentList.end(); itr++) {
-        if (itr->getStudentId() == 3) {
-            studentList.erase(itr);
-            break;
-        }
-    }
-    displayStudents(console, "List: After deleting front, back & student ID 3");
-}
 

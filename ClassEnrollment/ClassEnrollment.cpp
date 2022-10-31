@@ -12,12 +12,13 @@
 // * Parsing using regex & sscanf
 // 
 // Various issues with this code:
-//   Versioning
+//   Versioning missing
 //   Hardcoding of a loop iteration
-//   Hardcoding user output
-//   UI class seems to have issues consistently outputing the passed strings
+//   Hardcoding user output, string literals littered through the code
+//   UI class seems to have issues, does not consistently output the passed strings
 //   Inconsistent formats (e.g. comments)
 //   Student storage & display really should be its own class to hide implementation from others
+//      Note - this one is fixed with StudentDb class, though retaining original implementation for demo
 //
 
 #include "ClassUI.h"
@@ -61,6 +62,9 @@ int main()
     // ToDo - add versioning
     console.writeOutput("Hello Class Enrollment application!\n");
 
+    console.writeOutput("\n\n Enter 5 integers (student IDs - store in different vector & list structures & then display\n");
+    system("pause");
+
     // original approach to data entry - before parser implemented
     // prompt user 5 times for a student ID, push onto the end of the storage array(s)
     unsigned int studentId;
@@ -70,28 +74,37 @@ int main()
         }
         // else invalid entry - continue to get next student
     }
-    displayStudents(console, "Displaying students entered using stoi() & local to main storage\n\n");
+    displayStudents(console, "Displaying students entered using stoi() & stored in data structures in main\n\n");
+
+
+    //   Playing with some of the vector & list capabilities - use local versions
+
+    console.writeOutput("\nNext section - demonstrate different options for manipulating vectors & lists\n");
+    system("pause");
+
+    extern void sandboxStudentDb(ClassUI);   // declare just before use
+    sandboxStudentDb(console);
 
     // Parser approach to data entry
     //    prompt user for a command and while that command isn't quit, grab student IDs
 
+    console.writeOutput("\nNext section - parser (separate class) to support user command entry\n");
+    system("pause");
+
     do {
         userInputString = console.getUserInput("Enter command: ");
         parserOutput = parser.parseInput(userInputString);
-        parser.displayParsedOutput(parserOutput, console);
+        parser.displayParsedOutput(parserOutput, console);   // beware - memory leak!!!!
 
         switch (parserOutput->command) {
         case Parser::STUDENT_ID:
             studentDb.storeStudentId(parserOutput->studentId);
         };
+        // ToDo - free parserOutput memory output - maybe passing command to a local variable 1st so can free it here
     } while (parserOutput->command != Parser::QUIT);
 
     // display contents of all three versions
     studentDb.displayStudents(console, "Vector & List: after entering student IDs");
-
-
-         //   Playing with some of the vector & list capabilities - use local versions
-    studentDb.sandboxStudentDb(console);
 
 }
 
@@ -107,6 +120,8 @@ int main()
 void storeStudentId(unsigned int studentId) {
 
     // push the object onto the vector array
+    //   why does this work?  wouldn't the object get destroyed when storeStudentId exits?
+    //   turns out the student object does get destroyed, but vector.push_back() is special :)
     Student student(studentId);
     studentVector.push_back(student);
 
@@ -114,7 +129,7 @@ void storeStudentId(unsigned int studentId) {
     Student* studentP = new Student(studentId);
     studentPointerVector.push_back(studentP);
 
-    // add the object to a list
+    // add the object created above to a list
     studentList.push_back(student);
 }
 
@@ -166,4 +181,32 @@ int getStudentId(ClassUI console) {
         return 0;
     }
     return studentId;
+}
+
+void sandboxStudentDb(ClassUI console) {
+    //   Playing with some of the vector & list capabilities - use local versions
+
+// pushing an element at the beginning of the list
+    Student student(99);
+    studentList.push_front(student);
+    studentVector.insert(studentVector.begin(), student);
+    displayStudents(console, "Vector & List: adding student ID 99 to front");
+
+    // erasing element at beginning, end & given position
+    // vector
+    studentVector.erase(studentVector.begin());
+    studentVector.pop_back();
+    studentVector.erase(studentVector.begin() + 2);  // erases element in 3rd position
+    displayStudents(console, "Vector: after deleting front, back & 3rd element");
+
+    // list
+    studentList.pop_front();
+    studentList.pop_back();
+    for (list <Student> ::iterator itr = studentList.begin(); itr != studentList.end(); itr++) {
+        if (itr->getStudentId() == 3) {
+            studentList.erase(itr);
+            break;
+        }
+    }
+    displayStudents(console, "List: After deleting front, back & student ID 3");
 }
