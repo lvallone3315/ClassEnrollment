@@ -6,7 +6,7 @@
 class ClassDb
 {
 private:
-    std::list<Class> ClassList;
+    std::list<Class> classList;
 
 public:
     ClassDb();
