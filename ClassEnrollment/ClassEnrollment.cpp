@@ -25,6 +25,7 @@
 #include "Parser.h"
 #include "Student.h"
 #include "StudentDb.h"
+#include "ClassDb.h"
 
 #include <iostream>
 #include <stdexcept>  // required for stoi - throws exception for invalid input (e.g. string starting with alphas
@@ -50,6 +51,7 @@ int main()
     Parser parser;      // command parser - pass it a string - parser knows command format & returns struct
     Parser::InputStruct* parserOutput;
     StudentDb studentDb;  // aggregation of all students
+    ClassDb classDb;      // aggregation of all classes
 
     string userInputString;   // raw user input - retrived from UI & redirected to parser for processing
 
@@ -99,6 +101,23 @@ int main()
         switch (parserOutput->command) {
         case Parser::STUDENT_ID:
             studentDb.storeStudentId(parserOutput->studentId);
+            break;
+        case Parser::CLASS_ID:
+            classDb.storeClassId(parserOutput->classId);
+            break;
+        case Parser::ENROLL_STUDENT:
+            classDb.enrollStudentInClass(parserOutput->studentId, parserOutput->classId);
+            break;
+        case Parser::DISPLAY_CLASS_ROSTER:
+            classDb.displayClassId(parserOutput->classId, console);
+            break;
+        case Parser::QUIT:
+            console.writeOutput("Bye!!/n");
+            break;
+        case Parser::ERROR:
+        default:
+            console.writeOutput("ERROR returned from parser");
+            break;
         };
         // ToDo - free parserOutput memory output - maybe passing command to a local variable 1st so can free it here
     } while (parserOutput->command != Parser::QUIT);

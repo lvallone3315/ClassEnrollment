@@ -82,6 +82,9 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 			parsedInput->command = CLASS_ID;
 			parsedInput->classId = id;
 		}
+		// could be a request to display the enrolled students
+		// check for this command & configure the parsedInput structure
+
 		else // invalid one argument command
 			parsedInput->command = ERROR;
 	}
@@ -134,6 +137,9 @@ void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 		// console.writeOutput("Class enrolls student" + parsedOutput->classId);  // ToDo - figure out why writeOutput can't use const char[] after int
 		// console.writeOutput(" " + parsedOutput->studentId);
 		break;
+	case DISPLAY_CLASS_ROSTER:
+		// output details of display class roster request (e.g. classId)
+
 	default:
 		cout << "*** Invalid Command ***\n";
 		cout << helpText;
