@@ -21,6 +21,6 @@ private:
 
 public:
     void displayStudents(ClassUI console, string heading);
-    void storeStudentId(unsigned int studentId);
+    bool storeStudentId(unsigned int studentId);
 };
 

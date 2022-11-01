@@ -58,7 +58,7 @@ int main()
     string userInputString;   // raw user input - retrived from UI & redirected to parser for processing
 
 
-    // helper functions
+    // local helper functions
     void displayStudents(ClassUI, string);
     int getStudentId(ClassUI console);
     void storeStudentId(unsigned int studentId);
@@ -99,34 +99,38 @@ int main()
 
     do {
         userInputString = console.getUserInput("Enter command: ");
-        parserOutput = parser.parseInput(userInputString);
+        parserOutput = parser.parseInput(userInputString);   // parserOutput is a pointer to memory created on the heap
         parser.displayParsedOutput(parserOutput, console);   // beware - memory leak!!!!
 
         switch (parserOutput->command) {
-        case Parser::STUDENT_ID:
-            studentDb.storeStudentId(parserOutput->studentId);
+        case Parser::STUDENT_ID:         // create student in student database
+            if (!studentDb.storeStudentId(parserOutput->studentId))
+                console.writeOutput("Error!  Student record not created\n\n");
             break;
-        case Parser::CLASS_ID:
-            classDb.storeClassId(parserOutput->classId);
+        case Parser::CLASS_ID:          // create course instance in class database
+            if (!classDb.storeClassId(parserOutput->classId))
+                console.writeOutput("Error!  Class record not created\n\n");
             break;
-        case Parser::ENROLL_STUDENT:
-            classDb.enrollStudentInClass(parserOutput->studentId, parserOutput->classId);
+        case Parser::ENROLL_STUDENT:   // enroll student in specified class
+            if (!classDb.enrollStudentInClass(parserOutput->studentId, parserOutput->classId))
+                console.writeOutput("Error! Student not added to class - likely class ID does not exist\n\n");
             break;
-        case Parser::DISPLAY_CLASS_ROSTER:
-            classDb.displayClassId(parserOutput->classId, console);
+        case Parser::DISPLAY_CLASS_ROSTER: // display roster for specified class
+            if (!classDb.displayClassId(parserOutput->classId, console))
+                console.writeOutput("Error! could not display class - likely class ID does not exist\n\n");
             break;
-        case Parser::QUIT:
-            console.writeOutput("Bye!!\n");
+        case Parser::QUIT:            // exit application
+            console.writeOutput("Bye!!\n\n");
             break;
-        case Parser::ERROR:
-        default:
-            console.writeOutput("ERROR returned from parser\n");
+        case Parser::ERROR:           // error when parsing user input, ignore & try again
+        default:                      // should never get to default, unless added command & forgot to update this switch statement
+            console.writeOutput("ERROR returned from parser\n\n");
             break;
         };
         // ToDo - free parserOutput memory output - maybe passing command to a local variable 1st so can free it here
     } while (parserOutput->command != Parser::QUIT);
 
-    // display contents of all three versions
+    // display students for all three versions
     studentDb.displayStudents(console, "Vector & List: after entering student IDs");
 
 }
@@ -206,16 +210,15 @@ int getStudentId(ClassUI console) {
     return studentId;
 }
 
+//   Playing with some of the vector & list capabilities - use local storage (ie defined in main)
 void sandboxStudentDb(ClassUI console) {
-    //   Playing with some of the vector & list capabilities - use local versions
-
-// pushing an element at the beginning of the list
+    // pushing an element at the beginning of the list
     Student student(99);
     studentList.push_front(student);
     studentVector.insert(studentVector.begin(), student);
-    displayStudents(console, "Vector & List: adding student ID 99 to front");
+    displayStudents(console, "Vector & List: adding student ID 99 to front\t\tNote: does not change pointer to object vector version");
 
-    // erasing element at beginning, end & given position
+    // erasing element at beginning, end & at a given position
     // vector
     studentVector.erase(studentVector.begin());
     studentVector.pop_back();

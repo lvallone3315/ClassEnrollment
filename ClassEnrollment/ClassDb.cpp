@@ -10,11 +10,14 @@ ClassDb::ClassDb() {
 //      storeClassId()
 // Create a class object with the classID
 // push it onto the class list
+//     Returns true if class record creation is successful, false if failed 
+//       (ToDo - currently always true, check for failure when adding to db
 
-void ClassDb::storeClassId(int classId) {
+bool ClassDb::storeClassId(int classId) {
     std::cout << "ClassDb::Creating class (ie storing ClassId) " << classId << "\n\n";
     Class classObject(classId);
     classList.push_back(classObject);
+    return true;
 
 }
 
@@ -25,7 +28,7 @@ void ClassDb::storeClassId(int classId) {
 //   if the class is not found, return false
 
 bool ClassDb::enrollStudentInClass(int studentId, int classId) {
-    std::cout << "ClassDb::Enrolling student " << studentId << " in Class " << classId << "\n\n";
+    std::cout << "ClassDb::Trying to enroll student " << studentId << " in Class " << classId << "\n\n";
     list <Class> ::iterator itr;
     for (itr = classList.begin(); itr != classList.end(); itr++) {
         if (itr->getClassId() == classId) {
@@ -34,8 +37,6 @@ bool ClassDb::enrollStudentInClass(int studentId, int classId) {
         }
     }
     return false;
-
-
 }
     
 //      displayClassId()
