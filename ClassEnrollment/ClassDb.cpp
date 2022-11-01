@@ -3,6 +3,12 @@
 #include <list>
 #include <iostream>
 
+// ClassDb
+//   manage a database of course instances (aka classes)
+//   database created as a list, allowing easy addition & deletion of instances
+//     (Note: course deletion not implemented yet)
+//   cout are for student debugging purposes & could be deleted
+
 ClassDb::ClassDb() {
     // Initialize ClassList - if needed
 }
@@ -14,7 +20,7 @@ ClassDb::ClassDb() {
 //       (ToDo - currently always true, check for failure when adding to db
 
 bool ClassDb::storeClassId(int classId) {
-    std::cout << "ClassDb::Creating class (ie storing ClassId) " << classId << "\n\n";
+    std::cout << "ClassDb::Creating course instance " << classId << "\n\n";
     Class classObject(classId);
     classList.push_back(classObject);
     return true;

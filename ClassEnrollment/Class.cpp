@@ -1,7 +1,5 @@
 #include "Class.h"
 
-#include <iostream>
-
 // Class (ie school class) class :)
 // each Class object contains the information relevant to a single course instance
 // including the class # (integer) and the students enrolled in the class (student objects)
@@ -9,17 +7,15 @@
 // constructor - class object can only exist with a class #,
 // ToDo - refactor to validate class identifier
 Class::Class(int id) {
-	// store id into instance variable classId
+	// store course id into instance variable classId
 	classId = id;
 }
 
 // getClassId()
-//   returns class id associated with this class instance
+//   returns class id associated for this instance (ie object)
 
 int Class::getClassId() {
-	// std::cout << "Class::Returns the integer class Id\n";
 	return classId;
-
 }
 
 // enrollStudent(studentId)
@@ -29,7 +25,6 @@ int Class::getClassId() {
 //      if already enrolled, return false (ie error)
 //
 bool Class::enrollStudent(int studentId) {
-	// std::cout << "Class::Enrolling the namned student in class " << classId << "\n";
 	// add student to class vector enrolledSTudents & return true
 	enrolledStudents.push_back(studentId);
 	return true;

@@ -49,7 +49,7 @@ std::list<Student> studentList;
 
 int main()
 {
-    ClassUI console;    // UI encapsulation - rather than directly writing to console
+    ClassUI console;    // UI encapsulation - rather than directly writing to console - ToDo fix issues in parser class
     Parser parser;      // command parser - pass it a string - parser knows command format & returns struct
     Parser::InputStruct* parserOutput;
     StudentDb studentDb;  // aggregation of all students
@@ -93,6 +93,9 @@ int main()
 
     // Parser approach to data entry
     //    prompt user for a command and while that command isn't quit, grab student IDs
+    //    Generally - methods return true (action completed successfully) or false - action not completed
+    //       ToDo - track type of failures & store in the parser output structure
+    //       ToDo - store actual user string in the parser output structure (this ToDo is also captured elsewhere)
 
     console.writeOutput("\nNext section - parser (separate class) to support user command entry\n");
     system("pause");

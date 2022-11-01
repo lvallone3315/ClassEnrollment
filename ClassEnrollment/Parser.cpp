@@ -43,7 +43,7 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 	/* Approach:
 	 *   Define a few regular expression comparisons to:
 	 *     1) validate the format is one of the defined formats (regex)
-	 *     2) if valid, parse into the appropriate fields (scanf_s)
+	 *     2) if valid, parse into the appropriate fields (sscanf_s)
 	 * 
 	 * ToDo - cleanup by using helper funtions to parse
 	 * ToDo - update parser to save the string the user entered
@@ -137,7 +137,7 @@ void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 		// console.writeOutput("Class ID: " + parsedOutput->classId);
 		break;
 	case ENROLL_STUDENT:
-		cout << "Student " << parsedOutput->studentId << " enrolled in " << parsedOutput->classId << "\n";
+		cout << "Student " << parsedOutput->studentId << " trying to enroll in " << parsedOutput->classId << "\n";
 		// console.writeOutput("Class enrolls student" + parsedOutput->classId);  // ToDo - figure out why writeOutput can't use const char[] after int
 		// console.writeOutput(" " + parsedOutput->studentId);
 		break;
@@ -147,7 +147,7 @@ void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 		break;
 
 	default:
-		cout << "*** Invalid Command ***\n";
+		cout << "   *** Invalid Command -- Valid commands are ...\n";
 		cout << helpText;
 
 		// console.writeOutput("invalid command: " + parsedOutput->command);
