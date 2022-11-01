@@ -10,15 +10,15 @@
 // ToDo - refactor to validate class identifier
 Class::Class(int id) {
 	// store id into instance variable classId
-	std::cout << "Class::construct class for id " << id << "\n";
+	classId = id;
 }
 
 // getClassId()
 //   returns class id associated with this class instance
 
 int Class::getClassId() {
-	std::cout << "Class::Returns the integer class Id\n";
-	return 0;
+	// std::cout << "Class::Returns the integer class Id\n";
+	return classId;
 
 }
 
@@ -28,9 +28,10 @@ int Class::getClassId() {
 //   afterwards - validate student not already enrolled in class
 //      if already enrolled, return false (ie error)
 //
-bool Class::enrollStudent(int StudentId) {
-	std::cout << "Class::Enrolling the namned student in class " << classId << "\n";
+bool Class::enrollStudent(int studentId) {
+	// std::cout << "Class::Enrolling the namned student in class " << classId << "\n";
 	// add student to class vector enrolledSTudents & return true
+	enrolledStudents.push_back(studentId);
 	return true;
 }
 
@@ -41,6 +42,11 @@ std::string Class::getStudentsInClassString()
 	// declare a local string variable
 	// iterate through all students in the class, saving them in the string variable
 	// return the string
-	std::cout << "Class::returning a string listing all students in the class\n";
-	return "";
+
+	std::string returnString = "";
+	for (int i = 0; i < enrolledStudents.size(); i++) {
+		returnString += std::to_string(enrolledStudents[i]);
+		returnString += "\n";
+	}
+	return returnString;
 }

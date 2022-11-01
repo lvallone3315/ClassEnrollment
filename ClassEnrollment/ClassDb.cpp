@@ -3,8 +3,6 @@
 #include <list>
 #include <iostream>
 
-// std::list<Class> ClassList;
-
 ClassDb::ClassDb() {
     // Initialize ClassList - if needed
 }
@@ -14,7 +12,9 @@ ClassDb::ClassDb() {
 // push it onto the class list
 
 void ClassDb::storeClassId(int classId) {
-    std::cout << "ClassDb::Creating class (ie storing ClassId)\n";
+    std::cout << "ClassDb::Creating class (ie storing ClassId) " << classId << "\n\n";
+    Class classObject(classId);
+    classList.push_back(classObject);
 
 }
 
@@ -25,8 +25,15 @@ void ClassDb::storeClassId(int classId) {
 //   if the class is not found, return false
 
 bool ClassDb::enrollStudentInClass(int studentId, int classId) {
-    std::cout << "ClassDb::Enrolling student in Class\n";
-    return true;
+    std::cout << "ClassDb::Enrolling student " << studentId << " in Class " << classId << "\n\n";
+    list <Class> ::iterator itr;
+    for (itr = classList.begin(); itr != classList.end(); itr++) {
+        if (itr->getClassId() == classId) {
+            itr->enrollStudent(studentId);
+            return true;
+        }
+    }
+    return false;
 
 
 }
@@ -38,5 +45,12 @@ bool ClassDb::enrollStudentInClass(int studentId, int classId) {
 //    if the class is not found, return false
 bool ClassDb::displayClassId(int classId, ClassUI console) {
     std::cout << "ClassDb:displaying class Id\n";
-    return true;
+    list <Class> ::iterator itr;
+    for (itr = classList.begin(); itr != classList.end(); itr++) {
+        if (itr->getClassId() == classId) {
+            std::cout << itr->getStudentsInClassString();
+            return true;
+        }
+    }
+    return false;
 };

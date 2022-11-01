@@ -84,6 +84,10 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 		}
 		// could be a request to display the enrolled students
 		// check for this command & configure the parsedInput structure
+		else if (command == DISPLAY_CLASS_ROSTER) {
+			parsedInput->command = DISPLAY_CLASS_ROSTER;
+			parsedInput->classId = id;
+		}
 
 		else // invalid one argument command
 			parsedInput->command = ERROR;
@@ -139,6 +143,7 @@ void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 		break;
 	case DISPLAY_CLASS_ROSTER:
 		// output details of display class roster request (e.g. classId)
+		cout << "Display roster for class " << parsedOutput->classId << "\n";
 		break;
 
 	default:

@@ -16,4 +16,3 @@ public:
 	std::string getStudentsInClassString();   // returns a string listing all students in the class
 	std::vector <int> getStudentsInClass();   // returns all of the students enrolled in the class, consider using list instead of vector
 };
-
