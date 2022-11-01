@@ -26,11 +26,11 @@ using namespace std;  // for debugging - delete after debugging
   *    Note - reducing reduncdancy, comment & help text all in one :)
   */
 string helpText =
-"Configure student :       1   <integer student id>\n"
-"Configure class :         2   <integer class id> \n"
-"Enroll student in class : 3  <integer class id>  <integer student id>\n"
-"Print class roster :      4  <integer class id>\n"
-"Quit:                     5  \n\n";
+"\t1   <integer student id>\t\t\t-> Create student record\n"
+"\t2   <integer class id>  \t\t\t-> Create course offering\n"
+"\t3   <integer class id>  <integer student id>\t-> Enroll a student in a course\n"
+"\t4   <integer class id>  \t\t\t-> Print the course roster\n"
+"\t5                       \t\t\t-> Quit the application \n\n";
 //   Parser error:             6 -- note this last ID is internal only & not available touser
 
 Parser::Parser() {
@@ -117,43 +117,34 @@ Parser::InputStruct *Parser::parseInput(string userString) {
  * displayParserOutput() - knows how to print all elements of parser output structure
  * args:
  *   parsedOutput - pointer to structure returned by parser
- *   console - UI to print  --- note major problems with this approach, need to debug further
- *      resorting to cout for now
+ *   console - UI to print - note to_string() required when creating print string from integers
 */
 
 void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 	//
 	switch (parsedOutput->command) {
 	case QUIT:
-		cout << "Quit\n";
-		// console.writeOutput("Quit");
+		console.writeOutput("Quit");
 		break;
 	case STUDENT_ID:
-		cout << "Student ID: " << parsedOutput->studentId << "\n";
-		// console.writeOutput("Student ID: " + parsedOutput->studentId);
+		console.writeOutput("Student ID: " + to_string(parsedOutput->studentId));
 		break;
 	case CLASS_ID:
-		cout << "Class ID: " << parsedOutput->classId << "\n";
-		// console.writeOutput("Class ID: " + parsedOutput->classId);
+		console.writeOutput("Class ID: " + to_string(parsedOutput->classId));
 		break;
 	case ENROLL_STUDENT:
-		cout << "Student " << parsedOutput->studentId << " trying to enroll in " << parsedOutput->classId << "\n";
-		// console.writeOutput("Class enrolls student" + parsedOutput->classId);  // ToDo - figure out why writeOutput can't use const char[] after int
-		// console.writeOutput(" " + parsedOutput->studentId);
+		// cout << "Student " << parsedOutput->studentId << " trying to enroll in " << parsedOutput->classId << "\n";
+		console.writeOutput("Student " + to_string(parsedOutput->studentId) + "trying to enroll in " + to_string(parsedOutput->classId));
 		break;
 	case DISPLAY_CLASS_ROSTER:
 		// output details of display class roster request (e.g. classId)
-		cout << "Display roster for class " << parsedOutput->classId << "\n";
+		console.writeOutput("Display roster for class" + to_string(parsedOutput->classId));
 		break;
 
 	default:
-		cout << "   *** Invalid Command -- Valid commands are ...\n";
-		cout << helpText;
-
-		// console.writeOutput("invalid command: " + parsedOutput->command);
-		// console.writeOutput("\n");
-		// console.writeOutput(helpText);
+		console.writeOutput("   *** Invalid Command -- Valid commands are ...\n");
+		console.writeOutput(helpText);
 		break;
 	}
-	// console.writeOutput("\n");
+	console.writeOutput("\n");
 }

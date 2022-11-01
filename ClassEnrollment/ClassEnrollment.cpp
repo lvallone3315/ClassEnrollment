@@ -15,7 +15,6 @@
 //   Versioning missing
 //   Hardcoding of a loop iteration
 //   Hardcoding user output, string literals littered through the code
-//   UI class seems to have issues, does not consistently output the passed strings
 //   Inconsistent formats (e.g. comments)
 //   Student storage & display really should be its own class to hide implementation from others
 //      Note - this one is fixed with StudentDb class, though retaining original implementation for demo
@@ -101,7 +100,7 @@ int main()
     system("pause");
 
     do {
-        userInputString = console.getUserInput("Enter command: ");
+        userInputString = console.getUserInput("\n\nEnter command: ");
         parserOutput = parser.parseInput(userInputString);   // parserOutput is a pointer to memory created on the heap
         parser.displayParsedOutput(parserOutput, console);   // beware - memory leak!!!!
 

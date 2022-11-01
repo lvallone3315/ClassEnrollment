@@ -55,7 +55,10 @@ bool ClassDb::displayClassId(int classId, ClassUI console) {
     list <Class> ::iterator itr;
     for (itr = classList.begin(); itr != classList.end(); itr++) {
         if (itr->getClassId() == classId) {
-            std::cout << itr->getStudentsInClassString();
+            string output = itr->getStudentsInClassString();
+            if (output == "")
+                output = "No students enrolled in course " + to_string(classId) + "\n";
+            console.writeOutput(output);
             return true;
         }
     }
