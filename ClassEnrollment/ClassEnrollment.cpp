@@ -33,8 +33,6 @@
 #include <list>      // list support for tracking student objects
 #include <iterator>  // list related - needed to traverse list of student objects
 
-#define IGNORE_ORIGINAL_CODE
-
 // Global storage for student arrays so can use helper function to display
     // two versions
     //   1st vector of objects
@@ -65,7 +63,6 @@ int main()
     // ToDo - add versioning
     console.writeOutput("Hello Class Enrollment application!\n");
 
-#ifndef IGNORE_ORIGINAL_CODE
     console.writeOutput("\n\n Enter 5 integers (student IDs - store in different vector & list structures & then display\n");
     system("pause");
 
@@ -88,7 +85,6 @@ int main()
 
     extern void sandboxStudentDb(ClassUI);   // declare just before use
     sandboxStudentDb(console);
-#endif
 
     // Parser approach to data entry
     //    prompt user for a command and while that command isn't quit, grab student IDs
@@ -120,8 +116,7 @@ int main()
                 console.writeOutput("Student successfully enrolled!\n");
             break;
         case Parser::DISPLAY_CLASS_ROSTER: // display roster for specified class
-            if (!classDb.displayClassId(parserOutput->classId, console))
-                console.writeOutput("Error! could not display class - likely class ID does not exist\n\n");
+            // class-431 add support to display the students enrolled in a class, don't forget the error case
             break;
         case Parser::QUIT:            // exit application
             console.writeOutput("Bye!!\n\n");

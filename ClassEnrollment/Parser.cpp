@@ -95,17 +95,7 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 
 	// command with two arguments - only enrollment command allows this
 	else if (regex_match(userString, twoArgRegex)) {
-		int command;
-		int classId;
-		int studentId;
-		sscanf_s(userString.c_str(), "%d %d %d", &command, &classId, &studentId);
-		if (command == ENROLL_STUDENT) {
-			parsedInput->command = ENROLL_STUDENT;
-			parsedInput->studentId = studentId;
-			parsedInput->classId = classId;
-		}
-		else // invalid two argument command
-			parsedInput->command = ERROR;
+	   // ToDo enroll student command - class-432 - 
 	}
 	else {
 		parsedInput->command = ERROR;

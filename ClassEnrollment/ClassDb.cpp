@@ -20,9 +20,8 @@ ClassDb::ClassDb() {
 //       (ToDo - currently always true, check for failure when adding to db
 
 bool ClassDb::storeClassId(int classId) {
+    // ToDo - class-429 - create a course in the database, for now don't check error case (e.g. can't add to list)
     std::cout << "ClassDb::Creating course instance " << classId << "\n\n";
-    Class classObject(classId);
-    classList.push_back(classObject);
     return true;
 
 }
