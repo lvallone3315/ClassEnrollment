@@ -26,11 +26,11 @@ using namespace std;  // for debugging - delete after debugging
   *    Note - reducing reduncdancy, comment & help text all in one :)
   */
 string helpText =
-"Configure student :       1   <integer student id>\n"
-"Configure class :         2   <integer class id> \n"
-"Enroll student in class : 3  <integer class id>  <integer student id>\n"
-"Print class roster :      4  <integer class id>\n"
-"Quit:                     5  \n\n";
+"\t1   <integer student id>\t\t\t-> Create student record\n"
+"\t2   <integer class id>  \t\t\t-> Create course offering\n"
+"\t3   <integer class id>  <integer student id>\t-> Enroll a student in a course\n"
+"\t4   <integer class id>  \t\t\t-> Print the course roster\n"
+"\t5                       \t\t\t-> Quit the application \n\n";
 //   Parser error:             6 -- note this last ID is internal only & not available touser
 
 Parser::Parser() {
@@ -43,7 +43,7 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 	/* Approach:
 	 *   Define a few regular expression comparisons to:
 	 *     1) validate the format is one of the defined formats (regex)
-	 *     2) if valid, parse into the appropriate fields (scanf_s)
+	 *     2) if valid, parse into the appropriate fields (sscanf_s)
 	 * 
 	 * ToDo - cleanup by using helper funtions to parse
 	 * ToDo - update parser to save the string the user entered
@@ -82,23 +82,20 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 			parsedInput->command = CLASS_ID;
 			parsedInput->classId = id;
 		}
+		// could be a request to display the enrolled students
+		// check for this command & configure the parsedInput structure
+		else if (command == DISPLAY_CLASS_ROSTER) {
+			parsedInput->command = DISPLAY_CLASS_ROSTER;
+			parsedInput->classId = id;
+		}
+
 		else // invalid one argument command
 			parsedInput->command = ERROR;
 	}
 
 	// command with two arguments - only enrollment command allows this
 	else if (regex_match(userString, twoArgRegex)) {
-		int command;
-		int classId;
-		int studentId;
-		sscanf_s(userString.c_str(), "%d %d %d", &command, &classId, &studentId);
-		if (command == ENROLL_STUDENT) {
-			parsedInput->command = ENROLL_STUDENT;
-			parsedInput->studentId = studentId;
-			parsedInput->classId = classId;
-		}
-		else // invalid two argument command
-			parsedInput->command = ERROR;
+	   // ToDo enroll student command - class-432 - 
 	}
 	else {
 		parsedInput->command = ERROR;
@@ -110,38 +107,34 @@ Parser::InputStruct *Parser::parseInput(string userString) {
  * displayParserOutput() - knows how to print all elements of parser output structure
  * args:
  *   parsedOutput - pointer to structure returned by parser
- *   console - UI to print  --- note major problems with this approach, need to debug further
- *      resorting to cout for now
+ *   console - UI to print - note to_string() required when creating print string from integers
 */
 
 void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 	//
 	switch (parsedOutput->command) {
 	case QUIT:
-		cout << "Quit\n";
-		// console.writeOutput("Quit");
+		console.writeOutput("Quit");
 		break;
 	case STUDENT_ID:
-		cout << "Student ID: " << parsedOutput->studentId << "\n";
-		// console.writeOutput("Student ID: " + parsedOutput->studentId);
+		console.writeOutput("Student ID: " + to_string(parsedOutput->studentId));
 		break;
 	case CLASS_ID:
-		cout << "Class ID: " << parsedOutput->classId << "\n";
-		// console.writeOutput("Class ID: " + parsedOutput->classId);
+		console.writeOutput("Class ID: " + to_string(parsedOutput->classId));
 		break;
 	case ENROLL_STUDENT:
-		cout << "Student " << parsedOutput->studentId << " enrolled in " << parsedOutput->classId << "\n";
-		// console.writeOutput("Class enrolls student" + parsedOutput->classId);  // ToDo - figure out why writeOutput can't use const char[] after int
-		// console.writeOutput(" " + parsedOutput->studentId);
+		// cout << "Student " << parsedOutput->studentId << " trying to enroll in " << parsedOutput->classId << "\n";
+		console.writeOutput("Student " + to_string(parsedOutput->studentId) + "trying to enroll in " + to_string(parsedOutput->classId));
 		break;
-	default:
-		cout << "*** Invalid Command ***\n";
-		cout << helpText;
+	case DISPLAY_CLASS_ROSTER:
+		// output details of display class roster request (e.g. classId)
+		console.writeOutput("Display roster for class" + to_string(parsedOutput->classId));
+		break;
 
-		// console.writeOutput("invalid command: " + parsedOutput->command);
-		// console.writeOutput("\n");
-		// console.writeOutput(helpText);
+	default:
+		console.writeOutput("   *** Invalid Command -- Valid commands are ...\n");
+		console.writeOutput(helpText);
 		break;
 	}
-	// console.writeOutput("\n");
+	console.writeOutput("\n");
 }

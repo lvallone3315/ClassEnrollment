@@ -5,10 +5,13 @@
 
 
 //     Store the student Id at the end of the arrays (ie vectors & list)
+//     Returns true if student record creation is successful, false if failed 
+//       (ToDo - currently always true, check for failure when adding to db
+// 
 //       three different storage approaches
 //          vector array storing classes, vector array storing pointers to classes
 //          list storing class
-void StudentDb::storeStudentId(unsigned int studentId) {
+bool StudentDb::storeStudentId(unsigned int studentId) {
 
     // push the object onto the vector array
     Student student(studentId);
@@ -20,6 +23,7 @@ void StudentDb::storeStudentId(unsigned int studentId) {
 
     // add the object to a list
     studentList.push_back(student);
+    return true;
 }
 
 /*

@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
+    <ClCompile Include="ClassDb.cpp" />
     <ClCompile Include="ClassEnrollment.cpp" />
     <ClCompile Include="ClassUI.cpp" />
     <ClCompile Include="Parser.cpp" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
+    <ClInclude Include="ClassDb.h" />
     <ClInclude Include="ClassUI.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Student.h" />
