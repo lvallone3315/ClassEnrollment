@@ -117,6 +117,8 @@ int main()
         case Parser::ENROLL_STUDENT:   // enroll student in specified class
             if (!classDb.enrollStudentInClass(parserOutput->studentId, parserOutput->classId))
                 console.writeOutput("Error! Student not added to class - likely class ID does not exist\n\n");
+            else
+                console.writeOutput("Student successfully enrolled!\n");
             break;
         case Parser::DISPLAY_CLASS_ROSTER: // display roster for specified class
             if (!classDb.displayClassId(parserOutput->classId, console))
