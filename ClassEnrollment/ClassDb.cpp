@@ -3,6 +3,8 @@
 #include <list>
 #include <iostream>
 
+using namespace std;
+
 // ClassDb
 //   manage a database of course instances (aka classes)
 //   database created as a list, allowing easy addition & deletion of instances

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "ClassUI.h"
 
+using namespace std;
+
 /* Class UI Class
  * Scope:
  *   Handles all reads & writes to console (or in the future, a graphical window)
@@ -20,17 +22,14 @@
  */
 
 
-// empty constructor
-ClassUI::ClassUI() {
-
-}
+// using default constructor - nothing to initialize
 
 
 // getUserInput()
 //   prompts user with string included in call
 //   waits for user input, echoes the input & returns it to caller
 
-string ClassUI::getUserInput(string prompt) {
+string ClassUI::getUserInput(string const &prompt) {
     string userInput;
 
     writeOutput(prompt);
@@ -40,7 +39,7 @@ string ClassUI::getUserInput(string prompt) {
 
 // writeOutput()
 //   writes passed string to console
-int ClassUI::writeOutput(string output) {
+int ClassUI::writeOutput(string const &output) {
     cout << output;
-    return(0);
+    return 0;
 }

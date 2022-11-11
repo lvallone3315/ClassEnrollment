@@ -3,8 +3,6 @@
 #include <string>
 #include "ClassUI.h"
 
-using namespace std;
-
 
 class Parser
 {
@@ -18,8 +16,8 @@ public:
 		int classId;
 	};
 
-	Parser();
-	InputStruct *parseInput(string userString);
-	void displayParsedOutput(InputStruct* parsedOutput, ClassUI console);
+	// Using default constructor - nothing to initialize, InputStruct created by parseInput() from the heap & returned to caller
+	InputStruct *parseInput(std::string const &userString);             // passing reference to user string to avoid copy (more efficient, id by Sonarlint)
+	void displayParsedOutput(InputStruct* parsedOutput, ClassUI console);   // write an Input structure to the console object
 };
 

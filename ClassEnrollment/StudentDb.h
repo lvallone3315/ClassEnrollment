@@ -20,7 +20,7 @@ private:
     std::list<Student> studentList;
 
 public:
-    void displayStudents(ClassUI console, string heading);
+    void displayStudents(ClassUI console, std::string heading);
     bool storeStudentId(unsigned int studentId);
 };
 

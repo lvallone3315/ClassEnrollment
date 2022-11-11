@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 
 //     Store the student Id at the end of the arrays (ie vectors & list)
 //     Returns true if student record creation is successful, false if failed 

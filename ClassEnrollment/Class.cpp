@@ -1,5 +1,7 @@
 #include "Class.h"
 
+using namespace std;
+
 // Class (ie school class) class :)
 // each Class object contains the information relevant to a single course instance
 // including the class # (integer) and the students enrolled in the class (student objects)

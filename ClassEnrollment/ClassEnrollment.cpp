@@ -33,6 +33,8 @@
 #include <list>      // list support for tracking student objects
 #include <iterator>  // list related - needed to traverse list of student objects
 
+using namespace std;
+
 #define IGNORE_ORIGINAL_CODE
 
 // Global storage for student arrays so can use helper function to display

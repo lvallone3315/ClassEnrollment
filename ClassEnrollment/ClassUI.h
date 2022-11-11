@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string>
-using namespace std;  // fair programming practice, as could create scope issues, but don't feel like qualifying all reads & writes
+
+// removed "using namespace std" per sonarlint recommendation as part of code cleanup
+//   using namespace should be avoided in header files since the class creator cannot control the environment it will be included in
 
 /*
  * Header file for Class program UI
@@ -12,8 +14,7 @@ using namespace std;  // fair programming practice, as could create scope issues
 class ClassUI
 {
 public:
-	ClassUI();
-	int writeOutput(string output);
-	string getUserInput(string prompt);
+	int writeOutput(std::string const &output);
+	std::string getUserInput(std::string const &prompt);
 };
 

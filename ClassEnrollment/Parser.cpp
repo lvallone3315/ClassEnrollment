@@ -25,7 +25,7 @@ using namespace std;  // for debugging - delete after debugging
   * structure of commands
   *    Note - reducing reduncdancy, comment & help text all in one :)
   */
-string helpText =
+const string helpText =
 "\t1   <integer student id>\t\t\t-> Create student record\n"
 "\t2   <integer class id>  \t\t\t-> Create course offering\n"
 "\t3   <integer class id>  <integer student id>\t-> Enroll a student in a course\n"
@@ -33,12 +33,10 @@ string helpText =
 "\t5                       \t\t\t-> Quit the application \n\n";
 //   Parser error:             6 -- note this last ID is internal only & not available touser
 
-Parser::Parser() {
-	// null constructor
-}
+// Using Default Constructor
 
-Parser::InputStruct *Parser::parseInput(string userString) {
-	InputStruct *parsedInput = new InputStruct;
+Parser::InputStruct *Parser::parseInput(string const &userString) {
+	auto *parsedInput = new InputStruct;
 
 	/* Approach:
 	 *   Define a few regular expression comparisons to:
@@ -110,7 +108,7 @@ Parser::InputStruct *Parser::parseInput(string userString) {
 	else {
 		parsedInput->command = ERROR;
 	}
-	return (parsedInput);
+	return parsedInput;
 }
 
 /**
@@ -133,7 +131,6 @@ void Parser::displayParsedOutput(InputStruct* parsedOutput, ClassUI console ) {
 		console.writeOutput("Class ID: " + to_string(parsedOutput->classId));
 		break;
 	case ENROLL_STUDENT:
-		// cout << "Student " << parsedOutput->studentId << " trying to enroll in " << parsedOutput->classId << "\n";
 		console.writeOutput("Student " + to_string(parsedOutput->studentId) + "trying to enroll in " + to_string(parsedOutput->classId));
 		break;
 	case DISPLAY_CLASS_ROSTER:
